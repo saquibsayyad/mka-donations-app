@@ -1,8 +1,15 @@
+/* Khuddam.nl theme colors */
+:root {
+    --khuddam-green: #1b3c2f;
+    --khuddam-gold: #e6b800;
+    --khuddam-light: #f8fafc;
+    --khuddam-dark: #162b22;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--khuddam-light);
+    color: var(--khuddam-dark);
 }
 
 .container {
@@ -11,8 +18,23 @@ body {
     padding: 20px;
 }
 
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 2px 16px rgba(27,60,47,0.08);
+    border: none;
+}
+
+.card-body {
+    background: #fff;
+    border-radius: 1rem;
+    position: relative;
+    min-height: 420px;
+    padding: 2rem;
+}
+
 h1, h2, h3 {
-    color: #333;
+    color: var(--khuddam-green);
+    font-weight: 700;
 }
 
 form {
@@ -54,11 +76,84 @@ button:hover {
     display: block;
 }
 
+.btn-primary, .btn-primary:focus {
+    background-color: var(--khuddam-green);
+    border-color: var(--khuddam-green);
+    color: #fff;
+}
+
+.btn-primary:hover, .btn-primary:active {
+    background-color: #14512d;
+    border-color: #14512d;
+}
+
+.btn-success, .btn-success:focus {
+    background-color: var(--khuddam-gold);
+    border-color: var(--khuddam-gold);
+    color: #1b3c2f;
+    font-weight: 600;
+}
+
+.btn-success:hover, .btn-success:active {
+    background-color: #bfa100;
+    border-color: #bfa100;
+    color: #fff;
+}
+
+.btn-outline-secondary {
+    border-color: var(--khuddam-green);
+    color: var(--khuddam-green);
+}
+
+.btn-outline-secondary:hover, .btn-outline-secondary:active {
+    background: var(--khuddam-green);
+    color: #fff;
+}
+
+.list-group-item {
+    background: #f8fafc;
+    border: none;
+    color: var(--khuddam-dark);
+}
+
+.table {
+    background: #fff;
+}
+
+.table thead {
+    background: var(--khuddam-green);
+    color: #fff;
+}
+
+.table-bordered th, .table-bordered td {
+    border-color: var(--khuddam-green);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f3f7f4;
+}
+
+.form-label {
+    color: var(--khuddam-green);
+    font-weight: 500;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--khuddam-gold);
+    box-shadow: 0 0 0 0.2rem rgba(230,184,0,.15);
+}
+
+.invalid-feedback {
+    color: #d9534f;
+}
+
 @media (max-width: 600px) {
     .container {
         padding: 10px;
     }
-
+    .card-body {
+        padding: 1rem;
+    }
     button {
         font-size: 14px;
     }
