@@ -1,0 +1,46 @@
+<div id="step1" class="step active">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" required placeholder="Your full name">
+        <div class="invalid-feedback">Please enter your name.</div>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" required placeholder="you@email.com">
+        <div class="invalid-feedback">Please enter a valid email address.</div>
+    </div>
+    <div class="mb-3">
+        <label for="majlis" class="form-label">Majlis</label>
+        <select class="form-select" id="majlis" required>
+            <option value="">Select Majlis</option>
+            <option value="A">Majlis A</option>
+            <option value="B">Majlis B</option>
+        </select>
+        <div class="invalid-feedback">Please select your Majlis.</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">AIMS ID</label>
+        <input type="text" class="form-control mb-2" id="aimsId" placeholder="AIMS ID">
+        <div class="invalid-feedback">Please enter your AIMS ID or select the option below.</div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="noAims">
+            <label class="form-check-label" for="noAims">I don't have an AIMS ID</label>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Group</label>
+        <div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="group" id="atfal" value="Atfal" required>
+                <label class="form-check-label" for="atfal">Atfal</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="group" id="khuddam" value="Khuddam" required>
+                <label class="form-check-label" for="khuddam">Khuddam</label>
+            </div>
+        </div>
+    </div>
+    <div class="d-grid">
+        <button type="button" class="btn btn-primary next-button">Next</button>
+    </div>
+</div>

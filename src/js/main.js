@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    await loadSteps();
     let currentStep = 0;
     const steps = document.querySelectorAll('.step');
     const nextButtons = document.querySelectorAll('.next-button');
@@ -241,6 +242,32 @@ document.addEventListener('DOMContentLoaded', function() {
     showStep(currentStep);
 });
 
+async function loadSteps() {
+    const stepFiles = [
+        'steps/step1-user-details.html',
+        'steps/step2-chanda-breakdown.html',
+        'steps/step3-summary.html'
+    ];
+    const container = document.getElementById('form-steps');
+    for (const file of stepFiles) {
+        const resp = await fetch(file);
+        const html = await resp.text();
+        container.insertAdjacentHTML('beforeend', html);
+    }
+}
+
 function initiatePayment() {
-    alert('Payment would be initiated here (Mollie integration needed).');
+    // Get total amount from summary
+    const total = parseFloat(document.getElementById('summary-total').innerText);
+    if (!total || total <= 0) {
+        alert('Total amount is invalid.');
+        return;
+    }
+    // Build a description (you can customize this)
+    const name = document.getElementById('summary-name').innerText;
+    const majlis = document.getElementById('summary-majlis').innerText;
+    const description = `Chanda payment by ${name} (${majlis})`;
+
+    // Call Mollie payment handler
+    handlePayment(total, description);
 }
