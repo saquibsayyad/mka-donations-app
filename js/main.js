@@ -143,8 +143,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             ijtemaAtfal: document.getElementById('chanda-ijtema-atfal').value,
         };
 
-        // Calculate total amount
-        const totalAmount = Object.values(chandaBreakdown).reduce((acc, val) => acc + parseFloat(val || 0), 0);
 
         // Fill user info as before
         document.getElementById('summary-name').innerText = userDetails.name;
@@ -157,18 +155,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         const chandaTable = document.getElementById('summary-chanda-table');
         chandaTable.innerHTML = '';
         let total = 0;
+        console.log('Chanda Breakdown:', chandaBreakdown);
         Object.entries(chandaBreakdown).forEach(([type, value]) => {
             if (value && parseFloat(value) > 0) {
                 total += parseFloat(value);
-                const label = type
-                    .replace('khuddam', 'Khuddam')
-                    .replace('ijtema', 'Ijtema')
-                    .replace('futureFund', 'Future Fund')
-                    .replace('atfal', 'Atfal')
-                    .replace('ijtemaAtfal', 'Ijtema');
+                label = getChandaLabel(type);
+
                 chandaTable.innerHTML += `
                     <tr>
-                        <td>${label.replace(/chanda-?/i, 'Chanda ')}</td>
+                        <td>${label}</td>
                         <td class="text-end">€${parseFloat(value).toFixed(2)}</td>
                     </tr>
                 `;
@@ -178,6 +173,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     function updateChandaFields() {
+        // Reset chanda amounts to zero
+        document.getElementById('chanda-khuddam').value = '';
+        document.getElementById('chanda-ijtema').value = '';
+        document.getElementById('future-fund').value = '';
+        document.getElementById('chanda-atfal').value = '';
+        document.getElementById('chanda-ijtema-atfal').value = '';
+
         const group = document.querySelector('input[name="group"]:checked');
         if (group) {
             if (group.value === "Khuddam") {
@@ -193,14 +195,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     nextButtons.forEach((button, index) => {
         button.addEventListener('click', function() {
             if (validateStep(currentStep)) {
-                if (currentStep < steps.length - 1) {
+                if (currentStep < steps.length - 2) {
                     currentStep++;
                     showStep(currentStep);
                     // Show correct fields when entering Step 2
                     if (currentStep === 1) {
                         updateChandaFields();
                     }
-                    if (currentStep === steps.length - 1) {
+                    if (currentStep === steps.length - 2) {
                         updateSummary();
                     }
                 }
@@ -219,8 +221,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     if (summaryButton) {
         summaryButton.addEventListener('click', function() {
+            showStep(3); // Show success step
             // Call the function to initiate payment via Mollie API
-            initiatePayment();
+            // initiatePayment();
         });
     }
 
@@ -246,7 +249,8 @@ async function loadSteps() {
     const stepFiles = [
         'steps/step1-user-details.html',
         'steps/step2-chanda-breakdown.html',
-        'steps/step3-summary.html'
+        'steps/step3-summary.html',
+        'steps/step4-success.html'
     ];
     const container = document.getElementById('form-steps');
     for (const file of stepFiles) {
@@ -271,3 +275,28 @@ function initiatePayment() {
     // Call Mollie payment handler
     handlePayment(total, description);
 }
+
+function getChandaLabel(type) {
+    var label = '';
+    switch (type) {
+        case 'khuddam':
+            label = 'Chanda Khuddam';
+            break;
+        case 'ijtema':
+            label = 'Chanda Ijtema';
+            break;
+        case 'futureFund':
+            label = 'Future Fund';
+            break;
+        case 'atfal':
+            label = 'Chanda Atfal';
+            break;
+        case 'ijtemaAtfal':
+            label = 'Chanda Ijtema';   
+            break;
+        default:
+            label = type.charAt(0).toUpperCase() + type.slice(1).replace(/([A-Z])/g, ' $1');
+    }
+    return label;
+}
+                
